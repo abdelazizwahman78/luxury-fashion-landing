@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #222222;
+  --primary: #ff385c;
+  --primary-active: #e00b41;
+  --primary-disabled: #ffd1da;
+  --muted: #6a6a6a;
+  --surface-soft: #f7f7f7;
+  --surface-strong: #f2f2f2;
+  --hairline: #dddddd;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: #ffffff;
+  --font-sans: var(--font-inter);
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.marquee-shell {
+  position: relative;
+}
+
+.marquee-shell::before,
+.marquee-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.marquee-shell::before {
+  left: 0;
+  background: linear-gradient(to right, #f7f7f7, transparent);
+}
+
+.marquee-shell::after {
+  right: 0;
+  background: linear-gradient(to left, #f7f7f7, transparent);
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+::selection {
+  background: rgba(255, 56, 92, 0.18);
+}
+
