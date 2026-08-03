@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Globe2, Heart, Menu, MoonStar, Search, ShoppingBag } from "lucide-react";
+import { Globe2, Heart, Menu, ShoppingBag, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const navigation = ["New In", "Women", "Men", "Collections", "Journal"];
+const navigation = ["Home", "Products", "Our Gallery", "About Us", "Contact Us"];
 
 export function Header() {
   return (
@@ -32,20 +32,17 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon" aria-label="Favorites">
+          <Button variant="ghost" size="icon" aria-label="Profile">
+            <UserRound className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" aria-label="Cart">
+            <ShoppingBag className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" aria-label="Favourite">
             <Heart className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="icon" aria-label="Language">
             <Globe2 className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" aria-label="Theme">
-            <MoonStar className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" aria-label="Search">
-            <Search className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" aria-label="Bag">
-            <ShoppingBag className="h-4 w-4" />
           </Button>
         </div>
       </div>

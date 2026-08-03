@@ -46,7 +46,7 @@ export function HeroSection() {
               <Button size="lg">
                 Explore collection <ArrowRight className="h-4 w-4" />
               </Button>
-              <span className="text-sm text-[#6a6a6a]">Curated homes, quiet luxury, and premium stays.</span>
+              <span className="text-sm text-[#6a6a6a]">Timeless Style. Modern Elegance.</span>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
