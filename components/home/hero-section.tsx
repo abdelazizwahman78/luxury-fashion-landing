@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ const stats = [
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-white text-[#222222]">
-      <div className="mx-auto max-w-[1280px] px-4 py-10 lg:px-8 lg:py-12">
+      <div className="mx-auto max-w-[1600px] px-5 py-10 lg:px-[80px] lg:py-12">
         <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#dddddd] bg-[#f7f7f7] px-3 py-1 text-[0.68rem] uppercase tracking-[0.35em] text-[#ff385c]">
@@ -43,10 +44,12 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg">
-                Explore collection <ArrowRight className="h-4 w-4" />
+              <Button asChild size="lg">
+                <Link href="/products">
+                  Explore collection <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <span className="text-sm text-[#6a6a6a]">Timeless Style. Modern Elegance.</span>
+              <span className="text-sm text-[#6a6a6a]">Discover Premium Fashion Crafted for Every Moment</span>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">

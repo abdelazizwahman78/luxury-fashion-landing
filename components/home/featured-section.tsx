@@ -4,57 +4,9 @@ import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/home/product-card";
 import { Button } from "@/components/ui/button";
+import { products as catalogProducts } from "@/lib/mock-data";
 
-const products = [
-  {
-    title: "Structured Wool Coat",
-    price: "$1,440",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80",
-    badge: "Best seller",
-  },
-  {
-    title: "Studio Leather Tote",
-    price: "$860",
-    image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
-    badge: "New",
-  },
-  {
-    title: "Satin Evening Dress",
-    price: "$1,120",
-    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80",
-    badge: "Trending",
-  },
-  {
-    title: "Monolith Utility Jacket",
-    price: "$1,010",
-    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80",
-    badge: "Limited",
-  },
-  {
-    title: "Soft Tailored Blazer",
-    price: "$940",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80",
-    badge: "Editor pick",
-  },
-  {
-    title: "Noir Day Pack",
-    price: "$680",
-    image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
-    badge: "Popular",
-  },
-  {
-    title: "Luna Silk Set",
-    price: "$1,260",
-    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80",
-    badge: "Hot",
-  },
-  {
-    title: "Urban Knit Layer",
-    price: "$780",
-    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80",
-    badge: "New",
-  },
-];
+const featuredProducts = catalogProducts.slice(0, 8);
 
 export function FeaturedSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -68,7 +20,7 @@ export function FeaturedSection() {
   };
 
   return (
-    <section className="mx-auto max-w-[1280px] px-2 py-6 lg:px-4 lg:py-8">
+    <section className="mx-auto max-w-[1600px] px-5 py-6 lg:px-[80px] lg:py-8">
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <p className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">New arrivals</p>
@@ -92,9 +44,17 @@ export function FeaturedSection() {
         className="-mx-2 overflow-x-auto px-2 pb-2 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         <div className="grid min-w-max grid-flow-col gap-4 lg:auto-cols-[minmax(280px,1fr)] lg:grid-cols-none">
-          {products.map((product) => (
-            <div key={product.title} className="w-[82vw] snap-start sm:w-[48vw] lg:w-[280px]">
-              <ProductCard {...product} />
+          {featuredProducts.map((product) => (
+            <div key={product.id} className="w-[82vw] snap-start sm:w-[48vw] lg:w-[280px]">
+              <ProductCard
+                title={product.name}
+                price={`$${product.price}`}
+                image={product.image}
+                badge={product.badge}
+                id={product.id}
+                productPrice={product.price}
+                brand={product.brand}
+              />
             </div>
           ))}
         </div>

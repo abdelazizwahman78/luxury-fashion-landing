@@ -1,8 +1,12 @@
-import { ChevronRight, Instagram, Sparkles } from "lucide-react";
+"use client";
+
+import Link from "next/link";
+import { Instagram, Sparkles } from "lucide-react";
 import { FeaturedSection } from "@/components/home/featured-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { Header } from "@/components/layout/header";
-import { Button } from "@/components/ui/button";
+import { FaqAccordion } from "@/components/ui/faq-accordion";
+import { useLanguageStore } from "@/lib/stores/language-store";
 
 const trustedBrands = [
   "Moncler",
@@ -24,16 +28,19 @@ const categories = [
   {
     name: "Tailoring",
     copy: "Clean lines and sculptural precision.",
+    category: "Tailoring",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80",
   },
   {
-    name: "Leather",
+    name: "Accessories",
     copy: "Soft-luxe silhouettes with contrast.",
+    category: "Accessories",
     image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Occasion",
     copy: "Evening statements designed for presence.",
+    category: "Occasion",
     image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80",
   },
 ];
@@ -49,16 +56,18 @@ const faqs = [
 ];
 
 export default function Home() {
+  const language = useLanguageStore((state) => state.language);
+
   return (
     <main className="min-h-screen bg-[#f5f5f5] text-[#222222]">
       <div className="border-b border-[#dddddd] bg-[#222222] px-4 py-3 text-center text-[0.68rem] uppercase tracking-[0.45em] text-[#f5f5f5]">
-        Complimentary express delivery on orders over $500
+        Complimentary express delivery on orders over $500 {language === "fr" ? "(Livraison express offerte sur les commandes de plus de 500 $)" : ""}
       </div>
 
       <Header />
       <HeroSection />
 
-      <section className="mx-auto max-w-[1280px] px-2 py-6 lg:px-4 lg:py-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-6 lg:px-[80px] lg:py-8">
         <div className="rounded-[20px] border border-[#dddddd] bg-white p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
@@ -82,27 +91,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-2 py-4 lg:px-4 lg:py-6">
+      <section className="mx-auto max-w-[1600px] px-5 py-4 lg:px-[80px] lg:py-6">
         <div className="grid gap-4 lg:grid-cols-3">
           {categories.map((category, index) => (
-            <article key={category.name} className="rounded-[20px] bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.04)] ring-1 ring-[#dddddd]">
-              <div
-                className="mb-4 h-72 rounded-[18px] bg-cover bg-center"
-                style={{ backgroundImage: `url(${category.image})` }}
-              />
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-[-0.04em]">{category.name}</h3>
-                  <p className="mt-2 max-w-xs text-sm text-[#6a6a6a]">{category.copy}</p>
+            <Link key={category.name} href={`/products?category=${encodeURIComponent(category.category)}`} className="block">
+              <article className="rounded-[20px] bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.04)] ring-1 ring-[#dddddd] transition hover:-translate-y-0.5">
+                <div
+                  className="mb-4 h-72 rounded-[18px] bg-cover bg-center"
+                  style={{ backgroundImage: `url(${category.image})` }}
+                />
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-2xl font-semibold tracking-[-0.04em]">{category.name}</h3>
+                    <p className="mt-2 max-w-xs text-sm text-[#6a6a6a]">{category.copy}</p>
+                  </div>
+                  <div className="text-[0.68rem] uppercase tracking-[0.35em] text-[#9e9e9e]">0{index + 1}</div>
                 </div>
-                <div className="text-[0.68rem] uppercase tracking-[0.35em] text-[#9e9e9e]">0{index + 1}</div>
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-2 py-5 lg:px-4 lg:py-7">
+      <section className="mx-auto max-w-[1600px] px-5 py-5 lg:px-[80px] lg:py-7">
         <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[20px] bg-white p-6 ring-1 ring-[#dddddd]">
             <div className="flex items-center gap-2 text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">
@@ -145,35 +156,7 @@ export default function Home() {
 
       <FeaturedSection />
 
-      <section className="mx-auto max-w-[1280px] px-2 py-4 lg:px-4 lg:py-6">
-        <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-[20px] bg-white p-6 ring-1 ring-[#dddddd]">
-            <span className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">Lookbook</span>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="h-60 rounded-[18px] bg-cover bg-center" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80)" }} />
-              <div className="h-60 rounded-[18px] bg-cover bg-center" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80)" }} />
-            </div>
-          </div>
-
-          <div className="rounded-[20px] bg-[#f7f7f7] p-6 ring-1 ring-[#dddddd]">
-            <span className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">Trending products</span>
-            <div className="mt-5 space-y-3">
-              {[
-                "Contour Trench",
-                "Studio Satin Blouse",
-                "Modern Ribbon Heel",
-              ].map((item) => (
-                <div key={item} className="flex items-center justify-between rounded-[14px] bg-white px-4 py-3">
-                  <span className="text-sm font-medium">{item}</span>
-                  <ChevronRight className="h-4 w-4 text-[#6a6a6a]" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-[1280px] px-2 py-4 lg:px-4 lg:py-6">
+      <section className="mx-auto max-w-[1600px] px-5 py-4 lg:px-[80px] lg:py-6">
         <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[20px] bg-white p-6 ring-1 ring-[#dddddd]">
             <span className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">Why choose us</span>
@@ -194,25 +177,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 py-8 lg:px-8">
-        <div className="rounded-[24px] bg-white p-6 ring-1 ring-[#dddddd]">
-          <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-            <div>
-              <p className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">Newsletter</p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-[-0.05em]">Receive the private edit first.</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#6a6a6a]">
-                Weekly product previews, editorial notes, and early access to limited release announcements.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <input className="h-12 flex-1 rounded-[14px] border border-[#dddddd] bg-[#f7f7f7] px-4 text-sm text-[#222222] placeholder:text-[#9e9e9e]" placeholder="Enter your email" />
-              <Button size="lg">Join</Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-[1280px] px-2 py-4 lg:px-4 lg:py-6">
+      <section className="mx-auto max-w-[1600px] px-5 py-4 lg:px-[80px] lg:py-6">
         <div className="rounded-[20px] bg-white p-6 ring-1 ring-[#dddddd]">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -236,22 +201,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 py-8 lg:px-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-8 lg:px-[80px]">
         <div className="rounded-[20px] bg-white p-6 ring-1 ring-[#dddddd]">
           <span className="text-[0.68rem] uppercase tracking-[0.45em] text-[#6a6a6a]">FAQ</span>
-          <div className="mt-4 grid gap-3">
-            {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-[18px] bg-[#f7f7f7] px-4 py-4">
-                <p className="text-sm font-medium">{faq.q}</p>
-                <p className="mt-2 text-sm text-[#6a6a6a]">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+          <FaqAccordion items={faqs} />
         </div>
       </section>
 
       <footer className="mt-8 border-t border-[#dddddd] bg-white">
-        <div className="mx-auto grid max-w-[1280px] gap-6 px-4 py-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
+        <div className="mx-auto grid max-w-[1600px] gap-6 px-5 py-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-[80px]">
           <div>
             <div className="text-lg font-semibold uppercase tracking-[0.35em] text-[#222222]">AURELIA</div>
             <p className="mt-3 max-w-md text-sm text-[#6a6a6a]">Premium modern essentials for the discerning wardrobe.</p>

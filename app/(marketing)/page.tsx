@@ -20,7 +20,7 @@ export default function Home() {
       <Header />
       <HeroSection />
 
-      <section className="mx-auto max-w-[1600px] px-4 py-14 lg:px-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 lg:px-[80px]">
         <div className="grid gap-4 rounded-[28px] border border-stone-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-6">
           {trustedBrands.map((brand) => (
             <div key={brand} className="flex min-h-16 items-center justify-center rounded-2xl bg-stone-100 text-sm font-semibold tracking-[0.3em] text-stone-500 uppercase">
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1600px] px-4 py-6 lg:px-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-6 lg:px-[80px]">
         <div className="grid gap-4 lg:grid-cols-3">
           {categories.map((category, index) => (
             <article key={category.name} className="rounded-[28px] bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -47,7 +47,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1600px] px-4 py-14 lg:px-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 lg:px-[80px]">
         <div className="grid gap-4 rounded-[32px] bg-stone-950 p-5 text-stone-50 lg:grid-cols-[1fr_1.1fr] lg:p-8">
           <div className="rounded-[28px] bg-stone-900 p-6">
             <p className="text-[0.68rem] uppercase tracking-[0.45em] text-stone-400">Featured Collection</p>
@@ -71,7 +71,7 @@ export default function Home() {
 
       <FeaturedSection />
 
-      <section className="mx-auto max-w-[1600px] px-4 py-4 lg:px-8">
+      <section className="mx-auto max-w-[1600px] px-5 py-4 lg:px-[80px]">
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-[28px] bg-white p-6 ring-1 ring-stone-200">
             <span className="text-[0.68rem] uppercase tracking-[0.45em] text-stone-500">Why Choose Us</span>

@@ -10,6 +10,7 @@
   --surface-soft: #f7f7f7;
   --surface-strong: #f2f2f2;
   --hairline: #dddddd;
+  --site-gutter: clamp(20px, 4vw, 80px);
 }
 
 @theme inline {
@@ -37,6 +38,18 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+
+.site-shell-inner {
+  width: min(100%, 1600px);
+  margin-inline: auto;
+  padding-inline: var(--site-gutter);
+}
+
+.site-shell-inner-compact {
+  width: min(100%, 1600px);
+  margin-inline: auto;
+  padding-inline: var(--site-gutter);
+}
 
 .marquee-shell {
   position: relative;

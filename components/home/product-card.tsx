@@ -1,24 +1,78 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, Heart, ShoppingBag, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/lib/stores/cart-store";
+import { useWishlistStore } from "@/lib/stores/wishlist-store";
+import { showToast } from "@/lib/toast";
 
 export function ProductCard({
   title,
   price,
   image,
   badge,
+  id,
   colors = ["#ffffff", "#111111", "#c4c4c4"],
   sizes = ["XS", "S", "M", "L"],
+  productPrice,
+  brand,
 }: {
   title: string;
   price: string;
   image: string;
   badge: string;
+  id?: string;
   colors?: string[];
   sizes?: string[];
+  productPrice?: number;
+  brand?: string;
 }) {
+  const router = useRouter();
+  const addToCart = useCartStore((state) => state.addToCart);
+  const wishlistItems = useWishlistStore((state) => state.items);
+  const toggleWishlistItem = useWishlistStore((state) => state.toggleWishlistItem);
+  const isWishlist = id ? wishlistItems.some((item) => item.id === id) : false;
+
+  const handleCardClick = () => {
+    if (id) {
+      router.push(`/products/${id}`);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (!id) {
+      return;
+    }
+
+    addToCart({ id, name: title, price: productPrice ?? 0, image, brand }, 1);
+    showToast("Added to Cart");
+  };
+
+  const handleToggleWishlist = () => {
+    if (!id) {
+      return;
+    }
+
+    toggleWishlistItem({ id, name: title, price: productPrice ?? 0, image, brand });
+    showToast(isWishlist ? "Removed from Wishlist" : "Added to Wishlist");
+  };
+
   return (
-    <article className="group relative min-h-[460px] overflow-hidden rounded-[14px] border border-[#dddddd] bg-white p-3 shadow-[rgba(0,0,0,0.02)_0_0_0_1px,rgba(0,0,0,0.04)_0_2px_6px,rgba(0,0,0,0.1)_0_4px_8px] transition duration-200 hover:-translate-y-0.5">
+    <article
+      role="button"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          handleCardClick();
+        }
+      }}
+      className="group relative min-h-[460px] cursor-pointer overflow-hidden rounded-[14px] border border-[#dddddd] bg-white p-3 shadow-[rgba(0,0,0,0.02)_0_0_0_1px,rgba(0,0,0,0.04)_0_2px_6px,rgba(0,0,0,0.1)_0_4px_8px] transition duration-200 hover:-translate-y-0.5"
+    >
       <div className="relative h-[260px] overflow-hidden rounded-[12px] bg-[#f7f7f7]">
         <Image
           src={image}
@@ -32,8 +86,16 @@ export function ProductCard({
           {badge}
         </div>
 
-        <button className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#222222] transition hover:bg-[#ff385c] hover:text-white">
-          <Heart className="h-4 w-4" />
+        <button
+          type="button"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            handleToggleWishlist();
+          }}
+          className={`absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#222222] transition hover:bg-[#ff385c] hover:text-white ${isWishlist ? "bg-[#ff385c] text-white" : ""}`}
+        >
+          <Heart className={`h-4 w-4 ${isWishlist ? "fill-current" : ""}`} />
         </button>
 
         <div className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.62rem] font-medium text-[#222222]">
@@ -80,12 +142,18 @@ export function ProductCard({
         </div>
 
         <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
-          <Button size="sm" className="flex-1 justify-center rounded-[8px]">
+          <Button size="sm" className="flex-1 justify-center rounded-[8px]" onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            handleAddToCart();
+          }}>
             <ShoppingBag className="h-4 w-4" />
             Add to Bag
           </Button>
-          <Button variant="outline" size="sm" className="min-w-[42px] rounded-[8px] px-0">
-            <Eye className="h-4 w-4" />
+          <Button asChild variant="outline" size="sm" className="min-w-[42px] rounded-[8px] px-0">
+            <Link href={id ? `/products/${id}` : "/products"} aria-label={`View ${title}`}>
+              <Eye className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
